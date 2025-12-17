@@ -156,29 +156,34 @@ def convert_markdown_to_pdf(input_file, output_file=None):
         }}
         h1 {{
             color: #2c3e50;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             margin-top: 0;
+            font-size: 24px;
         }}
         h2 {{
             color: #34495e;
-            margin-bottom: 10px;
-            margin-top: 30px;
+            margin-bottom: 8px;
+            margin-top: 22px;
+            font-size: 20px;
         }}
         h3 {{
             color: #555;
-            margin-top: 20px;
+            margin-top: 18px;
+            font-size: 17px;
         }}
         table {{
             border-collapse: collapse;
             width: 100%;
             margin: 20px 0;
-            page-break-inside: auto;
+            page-break-inside: avoid;
+            break-inside: avoid;
             border: none;
+            font-size: 14px;
         }}
         th, td {{
             border: none;
             border-bottom: 1px solid #999;
-            padding: 10px 8px;
+            padding: 8px 6px;
             text-align: left;
             vertical-align: top;
             page-break-inside: avoid;
@@ -208,6 +213,7 @@ def convert_markdown_to_pdf(input_file, output_file=None):
         ul, ol {{
             margin: 10px 0;
             padding-left: 30px;
+            font-size: 15px;
         }}
         li {{
             margin: 5px 0;
