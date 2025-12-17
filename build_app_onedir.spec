@@ -7,7 +7,7 @@ a = Analysis(
     pathex=[],
     binaries=[],
     datas=[],
-    hiddenimports=['markdown', 'weasyprint', 'weasyprint.css', 'weasyprint.html', 'weasyprint.pdf'],
+    hiddenimports=['markdown', 'weasyprint', 'weasyprint.css', 'weasyprint.html', 'weasyprint.pdf', 'pymdownx', 'pymdownx.tasklist'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -52,7 +52,7 @@ coll = COLLECT(
 app = BUNDLE(
     coll,
     name='MarkdownToPDF.app',
-    icon=None,
+    icon=False,
     bundle_identifier='com.markdowntopdf.converter',
     version='1.0.0',
     info_plist={

@@ -20,23 +20,25 @@ BASE_DIR_ENV = os.environ.get("MD2PDF_BASE_DIR")
 ALLOWED_BASE_DIR = Path(BASE_DIR_ENV).resolve() if BASE_DIR_ENV else None
 ALLOW_OUTSIDE_BASE = os.environ.get("MD2PDF_ALLOW_OUTSIDE_BASE", "0") == "1"
 
-# Markdown extensions for fidelity (lists, code, tables, explicit line breaks)
+# Markdown extensions for fidelity (lists, code, tables, explicit line breaks, checkboxes)
 MARKDOWN_EXTENSIONS = [
     "tables",
     "fenced_code",
     "sane_lists",
     "nl2br",
+    "pymdownx.tasklist",  # Enable checkbox support
 ]
 
 # Allow basic formatting while stripping scripts/unsafe HTML
 ALLOWED_TAGS = sorted(
     set(bleach.sanitizer.ALLOWED_TAGS)
-    | {"p", "pre", "h1", "h2", "h3", "h4", "h5", "h6", "table", "thead", "tbody", "tr", "th", "td", "code", "hr", "br"}
+    | {"p", "pre", "h1", "h2", "h3", "h4", "h5", "h6", "table", "thead", "tbody", "tr", "th", "td", "code", "hr", "br", "input"}
 )
 ALLOWED_ATTRIBUTES = dict(bleach.sanitizer.ALLOWED_ATTRIBUTES)
 ALLOWED_ATTRIBUTES.update({
     "a": ["href", "title", "name"],
     "img": ["src", "alt", "title"],
+    "input": ["type", "checked", "disabled"],
 })
 
 def _enforce_base_dir(resolved_path: Path, original: str) -> None:
@@ -213,6 +215,13 @@ def convert_markdown_to_pdf(input_file, output_file=None):
         }}
         li {{
             margin: 5px 0;
+        }}
+        input[type="checkbox"] {{
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            cursor: default;
         }}
         strong {{
             color: #2c3e50;
