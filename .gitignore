@@ -1,0 +1,14 @@
+# Virtual environments
+pdf_converter_env/
+
+# Build artifacts
+dist/
+build/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# macOS metadata
+.DS_Store
+
