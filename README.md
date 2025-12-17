@@ -37,6 +37,37 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Quick Start: Simple `md2pdf` Command
+
+The easiest way to use this tool is to set up a simple `md2pdf` command:
+
+**Option 1: Create an alias (for current directory)**
+
+```bash
+# Add to your ~/.zshrc or ~/.bashrc (replace with your actual path)
+alias md2pdf="/path/to/md_to_pdf/convert_md_to_pdf.sh"
+```
+
+**Option 2: Install system-wide (recommended)**
+
+```bash
+# Install to /usr/local/bin (requires sudo)
+sudo ln -s "$(pwd)/convert_md_to_pdf.sh" /usr/local/bin/md2pdf
+
+# Now use from anywhere
+md2pdf document.md
+```
+
+Once set up, use it simply:
+
+```bash
+# Convert a file (PDF created in same directory)
+md2pdf document.md
+
+# Convert with custom output location
+md2pdf document.md output.pdf
+```
+
 ### Basic Usage
 
 ```bash
