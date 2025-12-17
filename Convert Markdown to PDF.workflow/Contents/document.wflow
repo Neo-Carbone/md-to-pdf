@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>510</string>
+	<key>AMApplicationVersion</key>
+	<string>2.10</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run Shell Script.action</string>
+				<key>ActionName</key>
+				<string>Run Shell Script</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<string>#!/bin/bash
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &amp;&gt; /dev/null &amp;&amp; pwd)"
+
+# Process each input file
+for INPUT_FILE in "$@"
+do
+    # Check if file exists and is a markdown file
+    if [[ -f "$INPUT_FILE" ]] &amp;&amp; ([[ "$INPUT_FILE" == *.md ]] || [[ "$INPUT_FILE" == *.markdown ]]); then
+        # Get the directory and filename without extension
+        DIR="$(dirname "$INPUT_FILE")"
+        BASENAME="$(basename "$INPUT_FILE" | sed 's/\.[^.]*$//')"
+
+        # Output PDF path
+        OUTPUT_FILE="$DIR/$BASENAME.pdf"
+
+        # Run the converter
+        if [[ -f "$SCRIPT_DIR/convert_md_to_pdf.sh" ]]; then
+            # Use the wrapper script if it exists
+            "$SCRIPT_DIR/convert_md_to_pdf.sh" "$INPUT_FILE" "$OUTPUT_FILE"
+        else
+            # Fallback to direct python call (requires python environment)
+            python3 "$SCRIPT_DIR/convert_md_to_pdf.py" "$INPUT_FILE" "$OUTPUT_FILE"
+        fi
+
+        if [[ $? -eq 0 ]]; then
+            echo "✓ Converted: $INPUT_FILE → $OUTPUT_FILE"
+        else
+            echo "✗ Failed to convert: $INPUT_FILE"
+        fi
+    else
+        echo "✗ Skipped: $INPUT_FILE (not a markdown file)"
+    fi
+done</string>
+					<key>inputMethod</key>
+					<integer>1</integer>
+					<key>shell</key>
+					<string>/bin/bash</string>
+					<key>timeout</key>
+					<string>0</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.RunShellScript</string>
+				<key>CFBundleVersion</key>
+				<string>1.0</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<false/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunShellScript</string>
+				<key>InputUUID</key>
+				<string>8B2D6E8C-4F5A-4B3C-8D9E-F1A2B3C4D5E6</string>
+				<key>Keywords</key>
+				<array>
+					<string>Shell</string>
+					<string>Script</string>
+					<string>Command</string>
+					<string>Run</string>
+					<string>Execute</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>9C3E7F9D-5G6B-4C3D-9E0F-G2B3C4D5E6F7</string>
+				<key>UUID</key>
+				<string>A1B2C3D4-E5F6-7890-ABCD-EF1234567890</string>
+				<key>UnlocalizedApplications</key>
+				<array/>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<integer>1</integer>
+				<key>location</key>
+				<integer>0</integer>
+				<key>nibName</key>
+				<string>RunShellScript</string>
+			</dict>
+			<key>uuid</key>
+			<string>A1B2C3D4-E5F6-7890-ABCD-EF1234567890</string>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict/>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>applicationBundleID</key>
+		<string>com.apple.Automator</string>
+		<key>applicationVersion</key>
+		<string>2.10</string>
+		<key>inputTypeIdentifier</key>
+		<string>com.apple.Automator.file</string>
+		<key>outputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceInputTypeIdentifier</key>
+		<string>com.apple.Automator.file</string>
+		<key>serviceOutputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceProcessesInput</key>
+		<integer>0</integer>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.workflow</string>
+	</dict>
+</dict>
+</plist>
